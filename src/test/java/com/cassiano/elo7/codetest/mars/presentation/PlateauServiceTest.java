@@ -4,8 +4,10 @@ import com.cassiano.elo7.codetest.mars.business.component.PlateauComponent;
 import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class PlateauServiceTest {
     @Mock
     private PlateauComponent plateauComponent;
