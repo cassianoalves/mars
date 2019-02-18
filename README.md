@@ -19,7 +19,7 @@ uma persistencia simples em memória.
 | Termo        | No código | Descrição                                                                       |
 |--------------|-----------|---------------------------------------------------------------------------------|
 | Sonda        | Probe     |Veículo que será guiado pelos comandos sobre o planalto onde ela se encontra     |
-| Planalto     | Plateu    |Área de exploração da sonda                                                      |
+| Planalto     | Plateau    |Área de exploração da sonda                                                      |
 
 ## Recursos REST
 
