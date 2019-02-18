@@ -1,4 +1,4 @@
-package com.cassiano.elo7.codetest.codetest;
+package com.cassiano.elo7.codetest.mars;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
