@@ -2,6 +2,7 @@ package com.cassiano.elo7.codetest.mars.itest;
 
 import com.cassiano.elo7.codetest.mars.CodetestApplication;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
@@ -29,17 +30,19 @@ public class PlateauITest {
     public void should_create_a_new_plateau_and_return_created_resource_at_Location_header() {
         Response response =
             given()
-            .body("{" +
+                .contentType(ContentType.JSON)
+                .body("{" +
                     "\"xSize\": 5," +
                     "\"ySize\": 10" +
-                    "}")
+                "}")
             .when()
-            .post("/plateau")
+                .post("/plateau")
             .then()
-            .statusCode(HttpStatus.SC_CREATED)
-            .extract().response();
+                .statusCode(HttpStatus.SC_CREATED)
+                .extract().response();
 
-        assertTrue(response.getHeader("Location").matches("http://localhost:" + port + "/plateau/[a-f,0-9]{32}]"));
+        String location = response.getHeader("Location");
+        assertTrue("Wrong Location: [" + location + "]", location.matches("http://localhost:" + port + "/plateau/[a-f,0-9]{32}]"));
     }
 
 }
