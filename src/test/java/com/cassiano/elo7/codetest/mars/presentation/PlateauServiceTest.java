@@ -11,11 +11,11 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 
 import java.net.URISyntaxException;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class PlateauServiceTest {
     @Mock
@@ -32,17 +32,17 @@ public class PlateauServiceTest {
         when(postHttpServletRequest.getRequestURL()).thenReturn(new StringBuffer("http://marsexplorer.com/plateau"));
     }
 
-
     @Test
     public void should_create_a_new_plateau_and_return_created_resource_at_Location_header() throws URISyntaxException {
         Plateau createdPlateau = new Plateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 12, 30);
         when(plateauComponent.save(any(Plateau.class))).thenReturn(createdPlateau);
 
-        Plateau plateau = new Plateau(null, 12, 30);
-        ResponseEntity<Plateau> result = plateauService.createPlateau(plateau, postHttpServletRequest);
+        Plateau newPlateau = new Plateau(null, 12, 30);
+        ResponseEntity<Plateau> result = plateauService.createPlateau(newPlateau, postHttpServletRequest);
 
+        verify(plateauComponent).save(newPlateau);
         assertEquals(createdPlateau, result.getBody());
-        assertEquals("http://marsexplorer.com/plateau/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", result.getHeaders().get("Location"));
+        assertEquals("http://marsexplorer.com/plateau/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", Objects.requireNonNull(result.getHeaders().get("Location")).get(0));
 
     }
 
