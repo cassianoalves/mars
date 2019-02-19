@@ -8,6 +8,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -44,8 +47,17 @@ public class PlateauComponentTest {
 
         verify(plateauRepository).findById("12341234abcdabcd12341234abcdabcd");
         assertSame(plateau, result);
-
     }
 
+    @Test
+    public void should_find_all_plateaus_calling_repo() {
+        List<Plateau> plateaus = new ArrayList<>();
+        when(plateauRepository.findAll()).thenReturn(plateaus);
+
+        List<Plateau> result = plateauComponent.findAll();
+
+        verify(plateauRepository).findAll();
+        assertSame(plateaus, result);
+    }
 
 }
