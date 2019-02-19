@@ -2,11 +2,18 @@ package com.cassiano.elo7.codetest.mars.business.component;
 
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
 import com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand;
+import com.cassiano.elo7.codetest.mars.integration.ProbeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class ProbeComponent {
-    public Probe save(Probe probe) {
+    @Autowired
+    private ProbeRepository probeRepository;
+    @Autowired
+    private PlateauComponent plateauComponent;
+
+    public Probe save(String plateauId, Probe probe) {
         return null;
     }
 
@@ -14,7 +21,7 @@ public class ProbeComponent {
         return null;
     }
 
-    public List<Probe> findAll() {
+    public List<Probe> findAll(String s) {
         return null;
     }
 
