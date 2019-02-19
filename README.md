@@ -59,6 +59,7 @@ GET  /plateau/{plid}/probe        : Retorna uma lista com todos as sondas no pla
 ```
 {
    "id": "b4d5b85632abc338dfa1337e286e6f0e",
+   "direction": "S",
    "positionX": 1,
    "positionY": 3
 }
