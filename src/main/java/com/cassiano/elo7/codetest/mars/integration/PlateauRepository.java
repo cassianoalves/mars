@@ -3,6 +3,7 @@ package com.cassiano.elo7.codetest.mars.integration;
 import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +26,10 @@ public class PlateauRepository {
     }
 
     public void deleteAll() {
-
+        table.clear();
     }
 
     public List<Plateau> findAll() {
-        return null;
+        return new ArrayList<>(table.values());
     }
 }
