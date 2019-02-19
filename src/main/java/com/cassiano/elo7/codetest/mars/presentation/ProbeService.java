@@ -4,6 +4,7 @@ package com.cassiano.elo7.codetest.mars.presentation;
 import com.cassiano.elo7.codetest.mars.business.component.ProbeComponent;
 import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
+import com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,8 @@ public class ProbeService {
         return ResponseEntity.ok(probeComponent.findAll());
     }
 
-    public Probe moveProbe(String plateauId, String probeId, List<String> commandList) {
-        return null;
+    @PostMapping("/{id}/move")
+    public ResponseEntity<Probe> moveProbe(@PathVariable("plid") String plateauId, @PathVariable("plid") String probeId, @RequestBody List<ProbeCommand> commandList) {
+        return ResponseEntity.ok(probeComponent.move(plateauId, probeId, commandList));
     }
 }

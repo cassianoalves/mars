@@ -1,6 +1,7 @@
 package com.cassiano.elo7.codetest.mars.business.component;
 
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
+import com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class ProbeComponent {
         return null;
     }
 
-    public Probe move(String plateauId, String probeId, List<Object> commandList) {
+    public Probe move(String plateauId, String probeId, List<ProbeCommand> commandList) {
         return null;
     }
 }

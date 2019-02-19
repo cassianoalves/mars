@@ -3,6 +3,7 @@ package com.cassiano.elo7.codetest.mars.presentation;
 import com.cassiano.elo7.codetest.mars.business.component.ProbeComponent;
 import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
+import com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -94,10 +95,10 @@ public class ProbeServiceTest {
         Probe currentProbe = new Probe();
         when(probeComponent.move(anyString(), anyString(), anyList())).thenReturn(currentProbe);
 
-        List<String> commandList = new ArrayList<>();
-        Probe result = probeService.moveProbe("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", commandList);
+        List<ProbeCommand> commandList = new ArrayList<>();
+        ResponseEntity<Probe> result = probeService.moveProbe("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", commandList);
 
-        assertSame(currentProbe, result);
+        assertSame(currentProbe, result.getBody());
     }
 
 }
