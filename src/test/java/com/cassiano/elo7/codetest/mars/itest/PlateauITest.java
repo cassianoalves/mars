@@ -123,9 +123,8 @@ public class PlateauITest {
         .then()
             .statusCode(HttpStatus.SC_OK)
             .contentType(ContentType.JSON)
-            .body(hasSize(2))
-            .body("sizeX", hasItem(15), hasItem(5))
-            .body("sizeX", hasItem(10), hasItem(32));
+            .body("sizeX", hasItems(15, 5))
+            .body("sizeY", hasItems(10, 32));
     }
 
 }
