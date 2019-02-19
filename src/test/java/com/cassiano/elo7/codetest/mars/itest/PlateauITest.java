@@ -33,6 +33,7 @@ public class PlateauITest {
     @Before
     public void setUp() {
         RestAssured.port = port;
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
     }
 
     @After
@@ -82,8 +83,8 @@ public class PlateauITest {
                 when()
                     .get(location)
                 .then()
+                        .statusCode(HttpStatus.SC_OK)
                     .contentType(ContentType.JSON)
-                    .statusCode(HttpStatus.SC_OK)
                     .extract().response();
 
         JsonPath jsonPath = getResponse.jsonPath();

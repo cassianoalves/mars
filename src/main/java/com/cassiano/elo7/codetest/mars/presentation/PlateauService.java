@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -24,7 +23,7 @@ public class PlateauService {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Plateau> findPlateauById(@PathParam("id") String id) {
+    public ResponseEntity<Plateau> findPlateauById(@PathVariable("id") String id) {
         return ResponseEntity.ok(plateauComponent.findById(id));
     }
 
