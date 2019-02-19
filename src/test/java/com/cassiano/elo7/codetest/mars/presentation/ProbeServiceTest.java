@@ -45,12 +45,12 @@ public class ProbeServiceTest {
     @Test
     public void should_create_a_new_probe_and_return_created_resource_at_Location_header() throws URISyntaxException {
         Probe createdProbe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 12, 30, new Plateau());
-        when(probeComponent.save(any(Probe.class))).thenReturn(createdProbe);
+        when(probeComponent.save(anyString(), any(Probe.class))).thenReturn(createdProbe);
 
         Probe newProbe = new Probe(null, 12, 30, null);
-        ResponseEntity<Probe> result = probeService.createProbe(newProbe, postHttpServletRequest);
+        ResponseEntity<Probe> result = probeService.createProbe("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", newProbe, postHttpServletRequest);
 
-        verify(probeComponent).save(newProbe);
+        verify(probeComponent).save("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", newProbe);
         assertEquals(createdProbe, result.getBody());
         assertEquals("http://marsexplorer.com/plateau/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/probe/bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
                 Objects.requireNonNull(result.getHeaders().get("Location")).get(0));
@@ -80,11 +80,11 @@ public class ProbeServiceTest {
 
 
     @Test
-    public void should_find_all_probe() {
+    public void should_find_all_probes_in_a_plateau() {
         List<Probe> probes = Arrays.asList(new Probe(), new Probe());
-        when(probeComponent.findAll()).thenReturn(probes);
+        when(probeComponent.findAll(anyString())).thenReturn(probes);
 
-        ResponseEntity<List<Probe>> result = probeService.findAllProbes();
+        ResponseEntity<List<Probe>> result = probeService.findAllProbes("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
         assertSame(probes, result.getBody());
         assertEquals(HttpStatus.OK, result.getStatusCode());

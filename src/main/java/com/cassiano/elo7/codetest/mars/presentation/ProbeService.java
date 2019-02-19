@@ -2,7 +2,6 @@ package com.cassiano.elo7.codetest.mars.presentation;
 
 
 import com.cassiano.elo7.codetest.mars.business.component.ProbeComponent;
-import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
 import com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,8 @@ public class ProbeService {
     private ProbeComponent probeComponent;
 
     @PostMapping
-    public ResponseEntity<Probe> createProbe(@RequestBody Probe probe, HttpServletRequest request) throws URISyntaxException {
-        Probe createdProbe = probeComponent.save(probe);
+    public ResponseEntity<Probe> createProbe(@PathVariable("plid") String plateauId, @RequestBody Probe probe, HttpServletRequest request) throws URISyntaxException {
+        Probe createdProbe = probeComponent.save(plateauId, probe);
         return ResponseEntity.created(buildLocation(createdProbe, request)).body(createdProbe);
     }
 
@@ -37,8 +36,8 @@ public class ProbeService {
     }
 
     @GetMapping
-    public ResponseEntity<List<Probe>> findAllProbes() {
-        return ResponseEntity.ok(probeComponent.findAll());
+    public ResponseEntity<List<Probe>> findAllProbes(@PathVariable("plid") String plateauId) {
+        return ResponseEntity.ok(probeComponent.findAll(plateauId));
     }
 
     @PostMapping("/{id}/move")
