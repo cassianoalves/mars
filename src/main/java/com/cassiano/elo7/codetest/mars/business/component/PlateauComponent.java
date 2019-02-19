@@ -17,11 +17,13 @@ public class PlateauComponent {
         return plateauRepository.save(newPlateau);
     }
 
+    public Plateau findById(String id) {
+        return null;
+    }
+
+
     private String createId() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-    public Plateau findById(String id) {
-        return null;
-    }
 }

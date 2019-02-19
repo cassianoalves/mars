@@ -34,4 +34,18 @@ public class PlateauComponentTest {
         assertEquals(34, createdPlateau.getYSize());
     }
 
+
+    @Test
+    public void should_find_plateau_calling_repo() {
+        Plateau plateau = new Plateau("12341234abcdabcd12341234abcdabcd", 12,34);
+        when(plateauRepository.findById("12341234abcdabcd12341234abcdabcd")).thenReturn(plateau);
+
+        Plateau result = plateauComponent.findById("12341234abcdabcd12341234abcdabcd");
+
+        verify(plateauRepository).findById("12341234abcdabcd12341234abcdabcd");
+        assertSame(plateau, result);
+
+    }
+
+
 }
