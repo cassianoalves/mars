@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/plateau")
@@ -31,7 +32,8 @@ public class PlateauService {
         return new URI(request.getRequestURL() + "/" + plateau.getId());
     }
 
-    public ResponseEntity<Plateau> findAllPlateus() {
-        return null;
+    @GetMapping
+    public ResponseEntity<List<Plateau>> findAllPlateus() {
+        return ResponseEntity.ok(plateauComponent.findAll());
     }
 }
