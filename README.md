@@ -42,8 +42,8 @@ GET  /plateau       : Retorna uma lista com todos os planaltos
 ```
 {
    "id": "b4d5b85632abc338dfa1337e286e6f0e",
-   "xSize": 5,
-   "ySize": 10
+   "sizeX": 5,
+   "sizeY": 10
 }
 ```
 
@@ -59,8 +59,8 @@ GET  /plateau/{plid}/probe        : Retorna uma lista com todos as sondas no pla
 ```
 {
    "id": "b4d5b85632abc338dfa1337e286e6f0e",
-   "xPosition": 1,
-   "yPosition": 3
+   "positionX": 1,
+   "positionY": 3
 }
 ```
 

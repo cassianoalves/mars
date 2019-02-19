@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Plateau {
     private String id;
-    @JsonProperty("xSize")
-    private int xSize;
-    @JsonProperty("ySize")
-    private int ySize;
+    private int sizeX;
+    private int sizeY;
 }

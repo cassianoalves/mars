@@ -33,8 +33,8 @@ public class PlateauComponentTest {
 
         verify(plateauRepository).save(same(newPlateau));
         assertTrue(createdPlateau.getId().matches("[a-f,0-9]{32}"));
-        assertEquals(12, createdPlateau.getXSize());
-        assertEquals(34, createdPlateau.getYSize());
+        assertEquals(12, createdPlateau.getSizeX());
+        assertEquals(34, createdPlateau.getSizeY());
     }
 
 

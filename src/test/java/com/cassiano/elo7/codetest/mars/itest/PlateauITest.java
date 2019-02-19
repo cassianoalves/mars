@@ -46,8 +46,8 @@ public class PlateauITest {
             given()
                 .contentType(ContentType.JSON)
                 .body("{" +
-                    "\"xSize\": 5," +
-                    "\"ySize\": 10" +
+                    "\"sizeX\": 5," +
+                    "\"sizeY\": 10" +
                 "}")
             .when()
                 .post("/plateau")
@@ -66,8 +66,8 @@ public class PlateauITest {
                 given()
                         .contentType(ContentType.JSON)
                         .body("{" +
-                                "\"xSize\": 5," +
-                                "\"ySize\": 10" +
+                                "\"sizeX\": 5," +
+                                "\"sizeY\": 10" +
                                 "}")
                 .when()
                         .post("/plateau")
@@ -88,8 +88,8 @@ public class PlateauITest {
 
         JsonPath jsonPath = getResponse.jsonPath();
         assertTrue(jsonPath.getString("id").matches("[a-f,0-9]{32}"));
-        assertEquals(5, jsonPath.getInt("xSize"));
-        assertEquals(10, jsonPath.getInt("ySize"));
+        assertEquals(5, jsonPath.getInt("sizeX"));
+        assertEquals(10, jsonPath.getInt("sizeY"));
     }
 
 
@@ -98,8 +98,8 @@ public class PlateauITest {
         given()
             .contentType(ContentType.JSON)
             .body("{" +
-                    "\"xSize\": 5," +
-                    "\"ySize\": 10" +
+                    "\"sizeX\": 5," +
+                    "\"sizeY\": 10" +
                     "}")
         .when()
             .post("/plateau")
@@ -108,8 +108,8 @@ public class PlateauITest {
         given()
             .contentType(ContentType.JSON)
             .body("{" +
-                    "\"xSize\": 15," +
-                    "\"ySize\": 32" +
+                    "\"sizeX\": 15," +
+                    "\"sizeY\": 32" +
                     "}")
         .when()
             .post("/plateau")
@@ -124,8 +124,8 @@ public class PlateauITest {
             .statusCode(HttpStatus.SC_OK)
             .contentType(ContentType.JSON)
             .body(hasSize(2))
-            .body("xSize", hasItem(15), hasItem(5))
-            .body("xSize", hasItem(10), hasItem(32));
+            .body("sizeX", hasItem(15), hasItem(5))
+            .body("sizeX", hasItem(10), hasItem(32));
     }
 
 }
