@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
 
 @Component
 public class PlateauComponent {
@@ -14,7 +13,7 @@ public class PlateauComponent {
     private PlateauRepository plateauRepository;
 
     public Plateau save(Plateau newPlateau) {
-        newPlateau.setId(createId());
+        newPlateau.setId(IdGenerator.createId());
         return plateauRepository.save(newPlateau);
     }
 
@@ -25,9 +24,4 @@ public class PlateauComponent {
     public List<Plateau> findAll() {
         return plateauRepository.findAll();
     }
-
-    private String createId() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
-    }
-
 }
