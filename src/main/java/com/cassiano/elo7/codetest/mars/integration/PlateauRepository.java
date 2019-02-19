@@ -4,6 +4,7 @@ import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -21,5 +22,13 @@ public class PlateauRepository {
 
     public Plateau findById(String id) {
         return table.get(id);
+    }
+
+    public void deleteAll() {
+
+    }
+
+    public List<Plateau> findAll() {
+        return null;
     }
 }
