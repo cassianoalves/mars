@@ -25,7 +25,8 @@ public class PlateauService {
 
     @GetMapping("/{id}")
     public ResponseEntity<Plateau> findPlateauById(@PathVariable("id") String id) {
-        return ResponseEntity.ok(plateauComponent.findById(id));
+        Plateau plateau = plateauComponent.findById(id);
+        return plateau == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(plateau);
     }
 
     private URI buildLocation(Plateau plateau, HttpServletRequest request) throws URISyntaxException {
