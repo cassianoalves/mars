@@ -27,8 +27,15 @@ public class ProbeComponent {
         return probeRepository.save(probe);
     }
 
-    public Probe findById(String id, String probeId) {
-        return null;
+    public Probe findById(String plateauId, String probeId) {
+        Plateau plateau = plateauComponent.findById(plateauId);
+        if(plateau == null) return null;
+
+        Probe probe = probeRepository.findById(probeId);
+        if(probe == null) return null;
+        if(!probe.getContainingPlateau().getId().equals(plateauId)) return null;
+
+        return probe;
     }
 
     public List<Probe> findAll(String s) {
