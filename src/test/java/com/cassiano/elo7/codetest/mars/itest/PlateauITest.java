@@ -16,10 +16,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {CodetestApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -91,8 +90,42 @@ public class PlateauITest {
         assertTrue(jsonPath.getString("id").matches("[a-f,0-9]{32}"));
         assertEquals(5, jsonPath.getInt("xSize"));
         assertEquals(10, jsonPath.getInt("ySize"));
+    }
 
 
+    @Test
+    public void should_find_all_created_plateau() {
+        given()
+            .contentType(ContentType.JSON)
+            .body("{" +
+                    "\"xSize\": 5," +
+                    "\"ySize\": 10" +
+                    "}")
+        .when()
+            .post("/plateau")
+        .then()
+            .statusCode(HttpStatus.SC_CREATED);
+        given()
+            .contentType(ContentType.JSON)
+            .body("{" +
+                    "\"xSize\": 15," +
+                    "\"ySize\": 32" +
+                    "}")
+        .when()
+            .post("/plateau")
+        .then()
+            .statusCode(HttpStatus.SC_CREATED);
+
+
+
+        when()
+            .get("/plateau")
+        .then()
+            .statusCode(HttpStatus.SC_OK)
+            .contentType(ContentType.JSON)
+            .body(hasSize(2))
+            .body("xSize", hasItem(15), hasItem(5))
+            .body("xSize", hasItem(10), hasItem(32));
     }
 
 }
