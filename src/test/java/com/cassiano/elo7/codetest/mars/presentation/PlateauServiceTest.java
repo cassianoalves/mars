@@ -79,7 +79,7 @@ public class PlateauServiceTest {
         List<Plateau> plateaus = Arrays.asList(new Plateau(), new Plateau());
         when(plateauComponent.findAll()).thenReturn(plateaus);
 
-        ResponseEntity<List<Plateau>> result = plateauService.findAllPlateus();
+        ResponseEntity<List<Plateau>> result = plateauService.findAllPlateaus();
 
         assertSame(plateaus, result.getBody());
         assertEquals(HttpStatus.OK, result.getStatusCode());

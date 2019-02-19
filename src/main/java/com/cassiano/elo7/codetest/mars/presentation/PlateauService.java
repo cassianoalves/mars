@@ -34,7 +34,7 @@ public class PlateauService {
     }
 
     @GetMapping
-    public ResponseEntity<List<Plateau>> findAllPlateus() {
+    public ResponseEntity<List<Plateau>> findAllPlateaus() {
         return ResponseEntity.ok(plateauComponent.findAll());
     }
 }
