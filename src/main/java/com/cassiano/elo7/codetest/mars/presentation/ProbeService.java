@@ -39,4 +39,8 @@ public class ProbeService {
     public ResponseEntity<List<Probe>> findAllProbes() {
         return ResponseEntity.ok(probeComponent.findAll());
     }
+
+    public Probe moveProbe(String plateauId, String probeId, List<String> commandList) {
+        return null;
+    }
 }

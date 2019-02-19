@@ -16,4 +16,8 @@ public class ProbeComponent {
     public List<Probe> findAll() {
         return null;
     }
+
+    public Probe move(String plateauId, String probeId, List<Object> commandList) {
+        return null;
+    }
 }

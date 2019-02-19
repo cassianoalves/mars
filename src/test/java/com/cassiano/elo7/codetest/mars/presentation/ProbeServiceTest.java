@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -86,6 +87,17 @@ public class ProbeServiceTest {
 
         assertSame(probes, result.getBody());
         assertEquals(HttpStatus.OK, result.getStatusCode());
+    }
+
+    @Test
+    public void should_move_probe_and_return_current_position() {
+        Probe currentProbe = new Probe();
+        when(probeComponent.move(anyString(), anyString(), anyList())).thenReturn(currentProbe);
+
+        List<String> commandList = new ArrayList<>();
+        Probe result = probeService.moveProbe("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", commandList);
+
+        assertSame(currentProbe, result);
     }
 
 }
