@@ -22,12 +22,12 @@ public class PlateauComponent {
         return plateauRepository.findById(id);
     }
 
+    public List<Plateau> findAll() {
+        return plateauRepository.findAll();
+    }
 
     private String createId() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
-    public List<Plateau> findAll() {
-        return null;
-    }
 }
