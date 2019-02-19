@@ -5,6 +5,7 @@ import com.cassiano.elo7.codetest.mars.integration.PlateauRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.UUID;
 
 @Component
@@ -26,4 +27,7 @@ public class PlateauComponent {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
 
+    public List<Plateau> findAll() {
+        return null;
+    }
 }

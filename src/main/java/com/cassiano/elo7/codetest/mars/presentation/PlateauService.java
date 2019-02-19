@@ -31,4 +31,7 @@ public class PlateauService {
         return new URI(request.getRequestURL() + "/" + plateau.getId());
     }
 
+    public ResponseEntity<Plateau> findAllPlateus() {
+        return null;
+    }
 }

@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import static org.junit.Assert.*;
@@ -61,5 +63,16 @@ public class PlateauServiceTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
+
+    @Test
+    public void should_find_all_plateau() {
+        List<Plateau> plateaus = Arrays.asList(new Plateau(), new Plateau());
+        when(plateauComponent.findAll()).thenReturn(plateaus);
+
+        ResponseEntity<List<Plateau>> result = plateauService.findAllPlateus();
+
+        assertSame(plateaus, result.getBody());
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+    }
 
 }
