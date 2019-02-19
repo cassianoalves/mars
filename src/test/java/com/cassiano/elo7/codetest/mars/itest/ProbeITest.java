@@ -71,7 +71,7 @@ public class ProbeITest {
 
 
     @Test
-    public void should_find_created_plateau_with_Location_URI() {
+    public void should_find_created_probe_with_Location_URI() {
         Response response =
                 given()
                         .contentType(ContentType.JSON)
@@ -106,7 +106,7 @@ public class ProbeITest {
 
 
     @Test
-    public void should_find_all_created_plateau() {
+    public void should_find_all_created_probes() {
         given()
             .contentType(ContentType.JSON)
                 .body("{" +
@@ -142,6 +142,45 @@ public class ProbeITest {
             .body("positionY", hasItems(0, 2));
     }
 
+
+    @Test
+    public void should_find_move_probe_and_return_last_position() {
+        Response response =
+                given()
+                        .contentType(ContentType.JSON)
+                        .body("{" +
+                                "\"direction\": \"N\"," +
+                                "\"positionX\": 3," +
+                                "\"positionY\": 0" +
+                                "}")
+                        .when()
+                        .post(plateauLocation + "/probe")
+                        .then()
+                        .statusCode(HttpStatus.SC_CREATED)
+                        .extract().response();
+
+        String location = response.getHeader("Location");
+
+
+        Response getResponse =
+                given()
+                    .contentType(ContentType.JSON)
+                    .body("[ \"R\", \"M\", \"M\", \"L\", \"M\", \"R\", \"M\"  ]")
+                .when()
+                    .post(location + "/move")
+                        .then()
+                    .statusCode(HttpStatus.SC_OK)
+                    .contentType(ContentType.JSON)
+                    .extract().response();
+
+        JsonPath jsonPath = getResponse.jsonPath();
+        assertTrue(jsonPath.getString("id").matches("[a-f,0-9]{32}"));
+        assertEquals("E", jsonPath.getString("direction"));
+        assertEquals(6, jsonPath.getInt("positionX"));
+        assertEquals(1, jsonPath.getInt("positionY"));
+    }
+
+// TODO: Test Errors
 
     private String createPlateau() {
         Response response =
