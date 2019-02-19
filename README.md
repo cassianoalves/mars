@@ -42,7 +42,7 @@ GET  /plateau       : Retorna uma lista com todos os planaltos
 ```
 {
    "id": "b4d5b85632abc338dfa1337e286e6f0e",
-   "sizeX": 5,
+   "sizeX": 15,
    "sizeY": 10
 }
 ```
@@ -71,8 +71,27 @@ GET  /plateau/{plid}/probe        : Retorna uma lista com todos as sondas no pla
 ```
 POST /plateau/{plid}/probe/{pbid}/move : Executa os movimentos enviados na lista de comandos do json.
 ```
-**Objeto JSON**
+**Request JSON**
 ```
 [ "L", "M", "M", "M", "R", "M", "L", "M", "M" ]
 ```
 *' "L" e "R" fazem a sonda virar 90 graus para a esquerda ou direita, respectivamente, sem mover a sonda. "M" faz com que a sonda mova-se para a frente um ponto da malha, mantendo a mesma direção. '*
+
+**Reponse JSON - Estado da sonda após os comandos**
+```
+{
+   "id": "b4d5b85632abc338dfa1337e286e6f0e",
+   "direction": "E",
+   "positionX": 6,
+   "positionY": 2
+}
+```
+
+### Retorno de erros
+
+As requisições podem retornar erros nos seguintes casos:
+
+* Dados do planalto inválidos
+* Dados da sonda inválidos
+* Sonda colocada para fora do planalto
+* Comandos fazerem a sonda sair do planalto. Nesse caso a sonda não se movimentará
