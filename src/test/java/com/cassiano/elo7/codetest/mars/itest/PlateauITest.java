@@ -42,7 +42,7 @@ public class PlateauITest {
                 .extract().response();
 
         String location = response.getHeader("Location");
-        assertTrue("Wrong Location: [" + location + "]", location.matches("http://localhost:" + port + "/plateau/[a-f,0-9]{32}]"));
+        assertTrue("Wrong Location: [" + location + "]", location.matches("http://localhost:" + port + "/plateau/[a-f,0-9]{32}"));
     }
 
 }
