@@ -18,7 +18,7 @@ public class PlateauComponent {
     }
 
     public Plateau findById(String id) {
-        return null;
+        return plateauRepository.findById(id);
     }
 
 
