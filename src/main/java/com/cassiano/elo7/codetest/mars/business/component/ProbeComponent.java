@@ -3,6 +3,7 @@ package com.cassiano.elo7.codetest.mars.business.component;
 import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
 import com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand;
+import com.cassiano.elo7.codetest.mars.exception.PlateauNotFoundException;
 import com.cassiano.elo7.codetest.mars.integration.ProbeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,9 @@ public class ProbeComponent {
 
     public Probe save(String plateauId, Probe probe) {
         Plateau plateau = plateauComponent.findById(plateauId);
+        if(plateau == null) {
+            throw new PlateauNotFoundException(plateauId);
+        }
         probe.setId(IdGenerator.createId());
         probe.setContainingPlateau(plateau);
         return probeRepository.save(probe);
