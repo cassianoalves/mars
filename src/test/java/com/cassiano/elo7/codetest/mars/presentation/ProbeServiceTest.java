@@ -1,6 +1,5 @@
 package com.cassiano.elo7.codetest.mars.presentation;
 
-import com.cassiano.elo7.codetest.mars.business.component.PlateauComponent;
 import com.cassiano.elo7.codetest.mars.business.component.ProbeComponent;
 import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
@@ -59,9 +58,9 @@ public class ProbeServiceTest {
     @Test
     public void should_find_probe_by_id() {
         Probe probe = new Probe();
-        when(probeComponent.findById(anyString())).thenReturn(probe);
+        when(probeComponent.findById(anyString(), anyString())).thenReturn(probe);
 
-        ResponseEntity<Probe> result = probeService.findProbeById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        ResponseEntity<Probe> result = probeService.findProbeById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 
         assertSame(probe, result.getBody());
         assertEquals(HttpStatus.OK, result.getStatusCode());
@@ -69,9 +68,9 @@ public class ProbeServiceTest {
 
     @Test
     public void should_return_httpstatus_not_found_when_component_returns_null() {
-        when(probeComponent.findById(anyString())).thenReturn(null);
+        when(probeComponent.findById(anyString(), anyString())).thenReturn(null);
 
-        ResponseEntity<Probe> result = probeService.findProbeById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        ResponseEntity<Probe> result = probeService.findProbeById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
 
         assertFalse(result.hasBody());
         assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());

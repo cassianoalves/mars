@@ -9,7 +9,7 @@ public class ProbeComponent {
         return null;
     }
 
-    public Probe findById(String id) {
+    public Probe findById(String id, String probeId) {
         return null;
     }
 
