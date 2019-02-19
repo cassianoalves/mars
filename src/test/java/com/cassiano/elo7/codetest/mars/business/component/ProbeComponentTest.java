@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -58,4 +60,56 @@ public class ProbeComponentTest {
         }
     }
 
+    @Test
+    public void should_find_a_probe_by_ids() {
+        Plateau plateau = new Plateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 10, 10);
+        when(plateauComponent.findById(anyString())).thenReturn(plateau);
+        Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, plateau);
+        when(probeRepository.findById(anyString())).thenReturn(probe);
+
+        Probe result = probeComponent.findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+
+        verify(plateauComponent).findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        verify(probeRepository).findById("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        assertSame(probe, result);
+    }
+
+
+    @Test
+    public void should_not_find_probe_when_plateau_not_match() {
+        Plateau plateau = new Plateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 10, 10);
+        when(plateauComponent.findById(anyString())).thenReturn(plateau);
+        Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, new Plateau("cccccccccccccccccccccccccccccccc", 10, 10));
+        when(probeRepository.findById(anyString())).thenReturn(probe);
+
+        Probe result = probeComponent.findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+
+        verify(plateauComponent).findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        verify(probeRepository).findById("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        assertNull(result);
+    }
+
+    @Test
+    public void should_not_find_probe_when_plateau_not_found() {
+        when(plateauComponent.findById(anyString())).thenReturn(null);
+
+        Probe result = probeComponent.findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+
+        verify(plateauComponent).findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        verifyZeroInteractions(probeRepository);
+        assertNull(result);
+    }
+
+    @Test
+    public void should_not_find_probe_when_plateau_found_but_not_probe() {
+        Plateau plateau = new Plateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 10, 10);
+        when(plateauComponent.findById(anyString())).thenReturn(plateau);
+        when(probeRepository.findById(anyString())).thenReturn(null);
+
+        Probe result = probeComponent.findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+
+        verify(plateauComponent).findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        verify(probeRepository).findById("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        assertNull(result);
+    }
 }

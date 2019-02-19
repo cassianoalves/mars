@@ -12,4 +12,8 @@ public class ProbeRepository {
     public Probe save(Probe probe) {
         return null;
     }
+
+    public Probe findById(String probeId) {
+        return null;
+    }
 }
