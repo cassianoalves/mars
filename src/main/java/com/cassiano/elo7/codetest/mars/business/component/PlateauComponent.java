@@ -20,4 +20,8 @@ public class PlateauComponent {
     private String createId() {
         return UUID.randomUUID().toString().replaceAll("-", "");
     }
+
+    public Plateau findById(String id) {
+        return null;
+    }
 }

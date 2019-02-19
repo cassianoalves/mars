@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +47,18 @@ public class PlateauServiceTest {
         verify(plateauComponent).save(newPlateau);
         assertEquals(createdPlateau, result.getBody());
         assertEquals("http://marsexplorer.com/plateau/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", Objects.requireNonNull(result.getHeaders().get("Location")).get(0));
+        assertEquals(HttpStatus.CREATED, result.getStatusCode());
+    }
 
+    @Test
+    public void should_find_plateau_by_id() {
+        Plateau plateau = new Plateau();
+        when(plateauComponent.findById(anyString())).thenReturn(plateau);
+
+        ResponseEntity<Plateau> result = plateauService.findPlateauById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+        assertSame(plateau, result.getBody());
+        assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
 
