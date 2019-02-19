@@ -63,6 +63,16 @@ public class PlateauServiceTest {
         assertEquals(HttpStatus.OK, result.getStatusCode());
     }
 
+    @Test
+    public void should_return_httpstatus_not_found_when_component_returns_null() {
+        when(plateauComponent.findById(anyString())).thenReturn(null);
+
+        ResponseEntity<Plateau> result = plateauService.findPlateauById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+        assertFalse(result.hasBody());
+        assertEquals(HttpStatus.NOT_FOUND, result.getStatusCode());
+    }
+
 
     @Test
     public void should_find_all_plateau() {
