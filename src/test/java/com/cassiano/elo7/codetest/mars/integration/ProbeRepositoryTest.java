@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.cassiano.elo7.codetest.mars.business.entity.Direction.*;
 import static org.junit.Assert.*;
 
 public class ProbeRepositoryTest {
@@ -23,7 +24,7 @@ public class ProbeRepositoryTest {
 
     @Test
     public void should_save_and_read_saved_probe() {
-        Probe probe = new Probe("abcdabcdabcdabcdabcdabcdabcdabcd", 98, 76, new Plateau());
+        Probe probe = new Probe("abcdabcdabcdabcdabcdabcdabcdabcd", 98, 76, N, new Plateau());
         Probe created = probeRepository.save(probe);
         assertEquals(probe, created);
 
@@ -33,7 +34,7 @@ public class ProbeRepositoryTest {
 
     @Test
     public void should_return_null_when_not_found() {
-        Probe probe = new Probe("abcdabcdabcdabcdabcdabcdabcd1234", 23, 45, new Plateau());
+        Probe probe = new Probe("abcdabcdabcdabcdabcdabcdabcd1234", 23, 45, N, new Plateau());
         Probe created = probeRepository.save(probe);
         assertEquals(probe, created);
 
@@ -45,9 +46,9 @@ public class ProbeRepositoryTest {
     public void should_return_all_plateau_records() {
         Plateau plateau1 = new Plateau("abcdabcdabcdabcdabcdabcdabcd1234", 12, 34);
         Plateau plateau2 = new Plateau("abcdabcdabcdabcdabcdabcdabcd2345", 23, 45);
-        Probe probe1 = new Probe("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 0,0, plateau1);
-        Probe probe2 = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 0,0, plateau2);
-        Probe probe3 = new Probe("cccccccccccccccccccccccccccccccc", 0,0, plateau1);
+        Probe probe1 = new Probe("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 0, 0, N, plateau1);
+        Probe probe2 = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 0, 0, S, plateau2);
+        Probe probe3 = new Probe("cccccccccccccccccccccccccccccccc", 0, 0, E, plateau1);
 
         probeRepository.save(probe1);
         probeRepository.save(probe2);
@@ -61,9 +62,9 @@ public class ProbeRepositoryTest {
     public void should_delete_all_records() {
         Plateau plateau1 = new Plateau("abcdabcdabcdabcdabcdabcdabcd1234", 12, 34);
         Plateau plateau2 = new Plateau("abcdabcdabcdabcdabcdabcdabcd2345", 23, 45);
-        Probe probe1 = new Probe("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 0,0, plateau1);
-        Probe probe2 = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 0,0, plateau2);
-        Probe probe3 = new Probe("cccccccccccccccccccccccccccccccc", 0,0, plateau1);
+        Probe probe1 = new Probe("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 0, 0, N, plateau1);
+        Probe probe2 = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 0, 0, S, plateau2);
+        Probe probe3 = new Probe("cccccccccccccccccccccccccccccccc", 0, 0, E, plateau1);
 
         probeRepository.save(probe1);
         probeRepository.save(probe2);

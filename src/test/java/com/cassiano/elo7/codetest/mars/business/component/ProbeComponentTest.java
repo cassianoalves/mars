@@ -15,6 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cassiano.elo7.codetest.mars.business.entity.Direction.*;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -39,7 +40,7 @@ public class ProbeComponentTest {
         Plateau plateau = new Plateau();
         when(plateauComponent.findById(anyString())).thenReturn(plateau);
 
-        Probe newProbe = new Probe(null, 5, 3,null);
+        Probe newProbe = new Probe(null, 5, 3, N, null);
         Probe createdProbe = probeComponent.save("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", newProbe);
 
         verify(probeRepository).save(same(newProbe));
@@ -54,7 +55,7 @@ public class ProbeComponentTest {
     public void should_throw_PlateauNotFoundException_when_given_plateau_not_found () {
         when(plateauComponent.findById(anyString())).thenReturn(null);
 
-        Probe newProbe = new Probe(null, 5, 3,null);
+        Probe newProbe = new Probe(null, 5, 3, S, null);
 
         try {
             probeComponent.save("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", newProbe);
@@ -69,7 +70,7 @@ public class ProbeComponentTest {
     public void should_find_a_probe_by_ids() {
         Plateau plateau = new Plateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 10, 10);
         when(plateauComponent.findById(anyString())).thenReturn(plateau);
-        Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, plateau);
+        Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, E, plateau);
         when(probeRepository.findById(anyString())).thenReturn(probe);
 
         Probe result = probeComponent.findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
@@ -84,7 +85,7 @@ public class ProbeComponentTest {
     public void should_not_find_probe_when_plateau_not_match() {
         Plateau plateau = new Plateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 10, 10);
         when(plateauComponent.findById(anyString())).thenReturn(plateau);
-        Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, new Plateau("cccccccccccccccccccccccccccccccc", 10, 10));
+        Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, W, new Plateau("cccccccccccccccccccccccccccccccc", 10, 10));
         when(probeRepository.findById(anyString())).thenReturn(probe);
 
         Probe result = probeComponent.findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
@@ -135,7 +136,7 @@ public class ProbeComponentTest {
         when(probeMovementComponent.move(any(Probe.class), anyList())).thenReturn(finalPosition);
         Plateau plateau = new Plateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 10, 10);
         when(plateauComponent.findById(anyString())).thenReturn(plateau);
-        Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, plateau);
+        Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, S, plateau);
         when(probeRepository.findById(anyString())).thenReturn(probe);
 
         ArrayList<ProbeCommand> commandList = new ArrayList<>();

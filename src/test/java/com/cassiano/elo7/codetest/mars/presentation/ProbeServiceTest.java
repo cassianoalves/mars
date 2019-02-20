@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static com.cassiano.elo7.codetest.mars.business.entity.Direction.*;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -44,10 +45,10 @@ public class ProbeServiceTest {
 
     @Test
     public void should_create_a_new_probe_and_return_created_resource_at_Location_header() throws URISyntaxException {
-        Probe createdProbe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 12, 30, new Plateau());
+        Probe createdProbe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 12, 30, N, new Plateau());
         when(probeComponent.save(anyString(), any(Probe.class))).thenReturn(createdProbe);
 
-        Probe newProbe = new Probe(null, 12, 30, null);
+        Probe newProbe = new Probe(null, 12, 30, N, null);
         ResponseEntity<Probe> result = probeService.createProbe("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", newProbe, postHttpServletRequest);
 
         verify(probeComponent).save("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", newProbe);

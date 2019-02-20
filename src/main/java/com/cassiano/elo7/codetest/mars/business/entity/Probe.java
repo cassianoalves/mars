@@ -12,6 +12,7 @@ public class Probe {
     private String id;
     private long positionX;
     private long positionY;
+    private Direction direction;
     @JsonIgnore
     private Plateau containingPlateau;
 }
