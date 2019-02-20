@@ -187,7 +187,7 @@ public class ProbeITest {
                 given()
                         .contentType(ContentType.JSON)
                         .body("{" +
-                                "\"sizeX\": 5," +
+                                "\"sizeX\": 10," +
                                 "\"sizeY\": 10" +
                                 "}")
                         .when()

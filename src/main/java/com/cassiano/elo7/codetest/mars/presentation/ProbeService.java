@@ -41,7 +41,7 @@ public class ProbeService {
     }
 
     @PostMapping("/{id}/move")
-    public ResponseEntity<Probe> moveProbe(@PathVariable("plid") String plateauId, @PathVariable("plid") String probeId, @RequestBody List<ProbeCommand> commandList) {
+    public ResponseEntity<Probe> moveProbe(@PathVariable("plid") String plateauId, @PathVariable("id") String probeId, @RequestBody List<ProbeCommand> commandList) {
         return ResponseEntity.ok(probeComponent.move(plateauId, probeId, commandList));
     }
 }
