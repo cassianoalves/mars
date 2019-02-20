@@ -30,7 +30,7 @@ public class ProbeMovementComponentTest {
 
     @Test
     public void should_move_probe_by_all_plateau() {
-        List<ProbeCommand> commands = Arrays.asList(R, M, M, L, L, M, M, R, R, M, M);
+        List<ProbeCommand> commands = Arrays.asList(R, M, M, L, M, L, M, M, R, M, R, M, M);
 
         Probe result = probeMovementComponent.move(probe, commands);
 
@@ -44,9 +44,8 @@ public class ProbeMovementComponentTest {
 
         List<ProbeCommand> commands = Arrays.asList(L, M, M);
 
-        Probe result;
         try {
-            result = probeMovementComponent.move(probe, commands);
+            probeMovementComponent.move(probe, commands);
         } catch (ProbeOutOfPlateauBoundsException e) {
             assertEquals("Movement sends probe bbb out of plateau aaa bounds", e.getMessage());
             throw e;
