@@ -48,6 +48,7 @@ public class ProbeComponent {
     public Probe move(String plateauId, String probeId, List<ProbeCommand> commandList) {
         Probe probe = findById(plateauId, probeId);
         if(probe == null) throw new ProbeNotFoundException(probeId);
-        return probeMovementComponent.move(probe, commandList);
+        Probe finalProbe = probeMovementComponent.move(probe, commandList);
+        return probeRepository.save(finalProbe);
     }
 }

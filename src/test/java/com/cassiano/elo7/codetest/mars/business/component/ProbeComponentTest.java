@@ -138,6 +138,7 @@ public class ProbeComponentTest {
         when(plateauComponent.findById(anyString())).thenReturn(plateau);
         Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, S, plateau);
         when(probeRepository.findById(anyString())).thenReturn(probe);
+        when(probeRepository.save(any(Probe.class))).thenAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
 
         ArrayList<ProbeCommand> commandList = new ArrayList<>();
         Probe result = probeComponent.move("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", commandList);
@@ -145,6 +146,7 @@ public class ProbeComponentTest {
         verify(probeMovementComponent).move(same(probe), same(commandList));
         verify(plateauComponent).findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         verify(probeRepository).findById("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        verify(probeRepository).save(finalPosition);
         assertSame(result, finalPosition);
     }
 
