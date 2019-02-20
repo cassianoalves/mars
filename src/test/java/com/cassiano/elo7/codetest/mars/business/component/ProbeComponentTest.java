@@ -144,7 +144,7 @@ public class ProbeComponentTest {
         verify(probeMovementComponent).move(same(probe), same(commandList));
         verify(plateauComponent).findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         verify(probeRepository).findById("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
-        assertSame(probe, finalPosition);
+        assertSame(result, finalPosition);
     }
 
     @Test(expected = ProbeNotFoundException.class)

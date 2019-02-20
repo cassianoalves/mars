@@ -4,6 +4,7 @@ import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
 import com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand;
 import com.cassiano.elo7.codetest.mars.exception.PlateauNotFoundException;
+import com.cassiano.elo7.codetest.mars.exception.ProbeNotFoundException;
 import com.cassiano.elo7.codetest.mars.integration.ProbeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,8 @@ public class ProbeComponent {
     private ProbeRepository probeRepository;
     @Autowired
     private PlateauComponent plateauComponent;
+    @Autowired
+    private ProbeMovementComponent probeMovementComponent;
 
     public Probe save(String plateauId, Probe probe) {
         Plateau plateau = plateauComponent.findById(plateauId);
@@ -38,11 +41,13 @@ public class ProbeComponent {
         return probe;
     }
 
-    public List<Probe> findAll(String s) {
-        return null;
+    public List<Probe> findAll(String plateauId) {
+        return probeRepository.findAllByPlateau(plateauId);
     }
 
     public Probe move(String plateauId, String probeId, List<ProbeCommand> commandList) {
-        return null;
+        Probe probe = findById(plateauId, probeId);
+        if(probe == null) throw new ProbeNotFoundException(probeId);
+        return probeMovementComponent.move(probe, commandList);
     }
 }
