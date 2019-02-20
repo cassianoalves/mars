@@ -3,20 +3,24 @@ package com.cassiano.elo7.codetest.mars.business.component;
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
 import com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand;
 import com.cassiano.elo7.codetest.mars.exception.ProbeOutOfPlateauBoundsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static com.cassiano.elo7.codetest.mars.business.entity.Direction.*;
-import static com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand.*;
 
 @Component
 public class ProbeMovementComponent {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProbeMovementComponent.class);
+
+
     public Probe move(Probe probe, List<ProbeCommand> commands) {
-        System.out.println(". => " + probe);
+        LOGGER.info(". => " + probe.getPositionX() + " " + probe.getPositionY() + " " + probe.getDirection() + " (" + probe.getId() + ")");
         commands.forEach(c -> {
             executeCommand(probe, c);
-            System.out.println(c + " => " + probe);
+            LOGGER.info(c + " => " + probe.getPositionX() + " " + probe.getPositionY() + " " + probe.getDirection() + " (" + probe.getId() + ")");
         });
         return probe;
     }
