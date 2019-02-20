@@ -2,7 +2,9 @@ package com.cassiano.elo7.codetest.mars.business.component;
 
 import com.cassiano.elo7.codetest.mars.business.entity.Plateau;
 import com.cassiano.elo7.codetest.mars.business.entity.Probe;
+import com.cassiano.elo7.codetest.mars.business.entity.ProbeCommand;
 import com.cassiano.elo7.codetest.mars.exception.PlateauNotFoundException;
+import com.cassiano.elo7.codetest.mars.exception.ProbeNotFoundException;
 import com.cassiano.elo7.codetest.mars.integration.ProbeRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -22,6 +25,8 @@ public class ProbeComponentTest {
     private ProbeRepository probeRepository;
     @Mock
     private PlateauComponent plateauComponent;
+    @Mock
+    private ProbeMovementComponent probeMovementComponent;
 
     @InjectMocks
     private ProbeComponent probeComponent;
@@ -111,5 +116,51 @@ public class ProbeComponentTest {
         verify(plateauComponent).findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         verify(probeRepository).findById("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
         assertNull(result);
+    }
+
+    @Test
+    public void should_find_all_plateau_probes_with_repo() {
+        List<Probe> probes = new ArrayList<>();
+        when(probeRepository.findAllByPlateau(anyString())).thenReturn(probes);
+
+        List<Probe> result = probeComponent.findAll("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
+        verify(probeRepository).findAllByPlateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        assertSame(probes, result);
+    }
+
+    @Test
+    public void should_move_probe_and_return_last_position() {
+        Probe finalPosition = new Probe();
+        when(probeMovementComponent.move(any(Probe.class), anyList())).thenReturn(finalPosition);
+        Plateau plateau = new Plateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 10, 10);
+        when(plateauComponent.findById(anyString())).thenReturn(plateau);
+        Probe probe = new Probe("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", 1, 2, plateau);
+        when(probeRepository.findById(anyString())).thenReturn(probe);
+
+        ArrayList<ProbeCommand> commandList = new ArrayList<>();
+        Probe result = probeComponent.move("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", commandList);
+
+        verify(probeMovementComponent).move(same(probe), same(commandList));
+        verify(plateauComponent).findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        verify(probeRepository).findById("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        assertSame(probe, finalPosition);
+    }
+
+    @Test(expected = ProbeNotFoundException.class)
+    public void should_throw_not_found_when_probe_not_found() {
+        Plateau plateau = new Plateau("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 10, 10);
+        when(plateauComponent.findById(anyString())).thenReturn(plateau);
+        when(probeRepository.findById(anyString())).thenReturn(null);
+
+        try {
+            Probe result = probeComponent.move("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb", new ArrayList<>());
+        } catch (ProbeNotFoundException e) {
+            verify(plateauComponent).findById("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            verify(probeRepository).findById("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+            verifyZeroInteractions(probeMovementComponent);
+            assertEquals("Probe bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb not found", e.getMessage());
+            throw e;
+        }
     }
 }
